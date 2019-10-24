@@ -51,7 +51,8 @@ public class HeadlessTaskService extends HeadlessJsTaskService {
                 // The the task was registered with in JS - must match
                 "BackgroundTask",
                 data,
-                TimeUnit.SECONDS.toMillis(timeout)
+                TimeUnit.SECONDS.toMillis(timeout),
+		true
         );
     }
 }
