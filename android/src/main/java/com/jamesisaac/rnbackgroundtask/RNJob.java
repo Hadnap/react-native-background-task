@@ -1,15 +1,17 @@
 package com.jamesisaac.rnbackgroundtask;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.os.Build;
-import android.app.ActivityManager;
-import com.facebook.react.HeadlessJsTaskService;
+
+import androidx.annotation.NonNull;
 import androidx.work.Worker;
-import androidx.work.ListenableWorker.Result;
+import androidx.work.WorkerParameters;
+
+import com.facebook.react.HeadlessJsTaskService;
+
+
 import java.util.List;
 
 /**
@@ -22,8 +24,13 @@ import java.util.List;
 public class RNJob extends Worker {
     private static final String TAG = "BackgroundTask";
 
+    public RNJob(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+        super(context, workerParams);
+    }
+
     @Override
     public Result doWork() {
+        Context context = getApplicationContext();
         if (isAppOnForeground(context)) {
             Log.d(TAG, "Job is running");
             Intent serviceIntent = new Intent(context, HeadlessTaskService.class);

@@ -1,22 +1,21 @@
 package com.jamesisaac.rnbackgroundtask;
 
 import android.util.Log;
+
 import androidx.work.PeriodicWorkRequest;
-import com.facebook.react.bridge.LifecycleEventListener;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.NativeModule;
+import androidx.work.WorkManager;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import java.util.concurrent.TimeUnit;
-import java.util.Set;
+import com.facebook.react.bridge.ReadableMap;
 
-public class BackgroundTaskModule extends ReactContextBaseJavaModule
-            implements LifecycleEventListener  {
+import java.util.concurrent.TimeUnit;
+
+public class BackgroundTaskModule extends ReactContextBaseJavaModule {
 
     private static final String TAG = "BackgroundTask";
-    private final PeriodicWorkRequest backgroundTaskRequest;
+    private PeriodicWorkRequest backgroundTaskRequest = null;
 
 
     public BackgroundTaskModule(ReactApplicationContext reactContext) {
@@ -43,24 +42,16 @@ public class BackgroundTaskModule extends ReactContextBaseJavaModule
     /**
      * Main point of interaction from JS users - allows them to specify the scheduling etc for the
      * background task.
-     *
+     * <p>
      * Default values are specified in JS (more accessible for the average user).
      *
      * @param config the config options passed in from JS:
-     *      - period (required): how frequently to carry out the task in seconds
-     *      - timeout (required): after how many seconds should the task be auto-killed
+     *               - period (required): how frequently to carry out the task in seconds
+     *               - timeout (required): after how many seconds should the task be auto-killed
      */
     @ReactMethod
     public void schedule(final ReadableMap config) {
         Log.d(TAG, "@ReactMethod BackgroundTask.schedule");
-
-        // Period can't be below 15m
-        int period = config.getInt("period");
-        if (period < 900) { period = 900; }
-
-        // Extra info to store with the JobRequest
-        PersistableBundleCompat extras = new PersistableBundleCompat();
-        extras.putInt("timeout", config.getInt("timeout"));
 
         WorkManager.getInstance(getReactApplicationContext())
                 .enqueue(backgroundTaskRequest);
@@ -73,6 +64,6 @@ public class BackgroundTaskModule extends ReactContextBaseJavaModule
     public void cancel() {
         Log.d(TAG, "@ReactMethod BackgroundTask.cancel");
 
-        WorkManager.cancelWorkById(backgroundTaskRequest.getId());
+        WorkManager.getInstance(getReactApplicationContext()).cancelWorkById(backgroundTaskRequest.getId());
     }
 }
