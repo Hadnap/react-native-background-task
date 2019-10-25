@@ -63,7 +63,7 @@ public class BackgroundTaskModule extends ReactContextBaseJavaModule
         extras.putInt("timeout", config.getInt("timeout"));
 
         WorkManager.getInstance(getReactApplicationContext())
-                .enqueue(backgroundTaskRequest)
+                .enqueue(backgroundTaskRequest);
     }
 
     /**
@@ -73,6 +73,6 @@ public class BackgroundTaskModule extends ReactContextBaseJavaModule
     public void cancel() {
         Log.d(TAG, "@ReactMethod BackgroundTask.cancel");
 
-        WorkManager.cancelWorkById(backgroundTaskRequest.getId())
+        WorkManager.cancelWorkById(backgroundTaskRequest.getId());
     }
 }
