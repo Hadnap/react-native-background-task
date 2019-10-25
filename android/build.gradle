@@ -11,12 +11,12 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -26,10 +26,12 @@ android {
 }
 
 repositories {
+    google()
     mavenCentral()
 }
 
 dependencies {
+    def work_version = "2.2.0"
+    implementation "androidx.work:work-runtime:$work_version"
     compile 'com.facebook.react:react-native:+'
-    compile 'com.evernote:android-job:1.1.11'
 }
