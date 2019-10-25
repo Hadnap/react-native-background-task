@@ -26,7 +26,10 @@ public class HeadlessTaskService extends HeadlessJsTaskService {
         // which can be accessed as the first param.
         WritableMap data = /* extras != null ? Arguments.fromBundle(extras) : */ Arguments.createMap();
 
-        int timeout = extras.getInt("timeout");
+        int timeout = 10000;
+        if (extras != null) {
+            timeout = extras.getInt("timeout");
+        }
 
         Log.d(TAG, String.format("Returning HeadlessJsTaskConfig, timeout=%s ms", timeout));
         return new HeadlessJsTaskConfig(
