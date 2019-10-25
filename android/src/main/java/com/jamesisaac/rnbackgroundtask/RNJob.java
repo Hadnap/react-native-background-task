@@ -20,6 +20,7 @@ import java.util.List;
  */
 
 public class RNJob extends Worker {
+    private static final String TAG = "BackgroundTask";
 
     @Override
     public Result doWork() {
