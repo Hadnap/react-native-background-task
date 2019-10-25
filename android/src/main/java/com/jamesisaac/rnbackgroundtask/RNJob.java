@@ -10,6 +10,7 @@ import android.app.ActivityManager;
 import com.facebook.react.HeadlessJsTaskService;
 import androidx.work.Worker;
 import androidx.work.ListenableWorker.Result;
+import java.util.List;
 
 /**
  * The single task which this library is able to schedule.
