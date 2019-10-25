@@ -53,7 +53,7 @@ public class BackgroundTaskModule extends ReactContextBaseJavaModule {
     public void schedule(final ReadableMap config) {
         Log.d(TAG, "@ReactMethod BackgroundTask.schedule");
 
-        WorkManager.getInstance(getReactApplicationContext())
+        WorkManager.getInstance()
                 .enqueue(backgroundTaskRequest);
     }
 
@@ -64,6 +64,6 @@ public class BackgroundTaskModule extends ReactContextBaseJavaModule {
     public void cancel() {
         Log.d(TAG, "@ReactMethod BackgroundTask.cancel");
 
-        WorkManager.getInstance(getReactApplicationContext()).cancelWorkById(backgroundTaskRequest.getId());
+        WorkManager.getInstance().cancelWorkById(backgroundTaskRequest.getId());
     }
 }
